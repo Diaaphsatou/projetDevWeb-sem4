@@ -1,0 +1,93 @@
+.w {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.w * {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#clavier {
+    width: 97%;
+    height: 400px;
+    margin: auto;
+}
+
+#clavier>div {
+    vertical-align: top;
+    width: 100%;
+    height: 69px;
+    margin: 1px;
+}
+
+#clavier>div>span,
+#clavier>div>table {
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    height: 100%;
+}
+
+#clavier>div>.r1 {
+    width: 6%;
+}
+
+#back {
+    width: 12%;
+}
+
+#space {
+    width: 31.78%;
+}
+
+#echap {
+    width: 4.3%;
+}
+
+#der {
+    width: 11%;
+}
+
+#tab {
+    width: 11.60%;
+}
+
+#entrer,
+#cl {
+    width: 14.44%;
+}
+
+#shift1 {
+    width: 12.42%;
+}
+
+#shift2 {
+    width: 16.46%;
+}
+
+.rs {
+    width: 8%;
+}
+
+#clavier>div>div {
+    display: flex;
+    flex-wrap: wrap;
+    width: 24.6%;
+    height: 100%;
+}
+
+#clavier>div>div div {
+    width: 33.3333333333333333333%;
+    height: 50%;
+}
+
+#clavier>div button {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+}

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/calculatrice.css">
+    <link rel="stylesheet" href="../css/clavier.css">
+    <link rel="stylesheet" href="../css/calendrier.css">
+    <script src="../script/jquery-3.4.1.js"></script>
+    <script src="../script/caret.js"></script>
+
+</head>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Lato', sans-serif;
+        font-size: 30px;
+    }
+    
+    body>div>span {
+        color: black;
+        margin: 20px;
+        text-decoration: underline;
+    }
+    
+    body>div>span:hover {
+        cursor: pointer;
+        text-shadow: 2px 2px rgba(0, 0, 0, 0.1);
+        text-decoration-color: #2ecc71;
+    }
+</style>
+
+<body style="background-color: #dfe6e9">
+    <div style="height:25px"> </div>
+    <div style="height:25px">
+        <span id="calc" onclick="distribuer('a')">
+            calculatrice
+        </span>
+        <span id="clav" onclick="distribuer('b')">
+            clavier
+        </span>
+        <span id="cale" onclick="distribuer('c')">
+            horloge
+        </span>
+    </div>
+    <div id="cal">
+        <div class="wer">
+            <div class="calculatrice">
+                <div class="saisi">
+                    <div style="display:inline-block;width :80%;margin: auto;">
+                        <input type="text" readonly="readonly" class="calc_resultat" id="ecran" value="">
+
+                    </div>
+                </div>
+                <div class="bouton">
+                    <div class="ch_op">
+                        <div class="calc_td_btn" onclick="sup()" class="red symbol">CE</div>
+                        <div class="calc_td_btn" onclick="effacer()" class="red symbol">⌫</div>
+                        <div class="calc_td_btn" onclick="inserOperation('%')" class="symbol">%</div>
+                        <div class="calc_td_btn" onclick="inserOperation('-')" class="symbol">-</div>
+                        <div class="calc_td_btn" onclick="inserNo(9)" class="nombre">9</div>
+                        <div class="calc_td_btn" onclick="inserNo(8)" class="nombre">8</div>
+                        <div class="calc_td_btn" onclick="inserNo(7)" class="nombre">7</div>
+                        <div class="calc_td_btn" onclick="inserOperation('+')" class="symbol">+</div>
+                        <div class="calc_td_btn" onclick="inserNo(6)" class="nombre">6</div>
+                        <div class="calc_td_btn" onclick="inserNo(5)" class="nombre">5</div>
+                        <div class="calc_td_btn" onclick="inserNo(4)" class="nombre">4</div>
+                        <div class="calc_td_btn" onclick="inserOperation('*')" class="symbol">x</div>
+                        <div class="calc_td_btn" onclick="inserNo(3)" class="nombre">3</div>
+                        <div class="calc_td_btn" onclick="inserNo(2)" class="nombre">2</div>
+                        <div class="calc_td_btn" onclick="inserNo(1)" class="nombre">1</div>
+                        <div class="calc_td_btn" onclick="inserOperation('/')" class="symbol">÷</div>
+                        <div class="calc_td_btn" onclick="sci()" class="red symbol">sci</div>
+                        <div class="calc_td_btn" onclick="inserNo(0)" class="nombre">0</div>
+                        <div class="calc_td_btn" onclick="des()">.</div>
+                        <div class="calc_td_btn" onclick="egalA()" class="symbol">=</div>
+
+                    </div>
+                    <div class="fonction" style="display:none">
+                        <div class="calc_td_btn" cla onclick="SR('ra')">√</div>
+                        <div class="calc_td_btn" cla onclick="SR('ca')">x²</div>
+                        <div class="calc_td_btn" cla onclick="SR('lo')">log</div>
+                        <div class="calc_td_btn" cla onclick="SR('co')">cos</div>
+                        <div class="calc_td_btn" cla onclick="SR('si')">sin</div>
+                        <div class="calc_td_btn" cla onclick="SR('ln')">ln</div>
+                        <div class="calc_td_btn" cla onclick="SR('tz')">tan</div>
+                        <div class="calc_td_btn" cla onclick="SR('fa')">x!</div>
+                        <div class="calc_td_btn" cla onclick="SR('ex')">exp</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="w" id="w" style="display:none;font-size: 16px">
+
+        <div id="clavier">
+            <div>
+                <textarea style="width: 98.15%;height: 100%;" id="saisi"></textarea>
+            </div>
+            <br>
+            <div>
+
+                <span id="echap"><button onclick="echap()"  > <span> Esc </span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('²','²')" class="nonaltgr"> <span> ²</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('&','1')" class="nonaltgr" > <span class="maj nonaltgrv">1</span> <br> <span class="nonmaj nonaltgrv">&</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('é','2','~')" > <span class="maj nonaltgrv">2</span> <span class="altgrv">~</span> <br> <span class="nonmaj nonaltgrv">é</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('1','3','#')"> <span class="maj nonaltgrv">3</span> <span class="altgrv">#</span> <br> <span class="nonmaj nonaltgrv">"</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('2','4','{')"> <span class="maj nonaltgrv">4</span> <span class="altgrv">{</span> <br> <span class="nonmaj nonaltgrv">'</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('(','5','[')"> <span class="maj nonaltgrv">5</span> <span class="altgrv">[</span> <br> <span class="nonmaj nonaltgrv">(</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('-','6','|')"> <span class="maj nonaltgrv">6</span> <span class="altgrv">|</span> <br> <span class="nonmaj nonaltgrv">-</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('è','7','`')"> <span class="maj nonaltgrv">7</span> <span class="altgrv">`</span> <br> <span class="nonmaj nonaltgrv">è</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('_','8','\\')"> <span class="maj nonaltgrv">8</span> <span class="altgrv">\</span> <br> <span class="nonmaj nonaltgrv">_</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('ç','9','^')"> <span class="maj nonaltgrv">9</span> <span class="altgrv">^</span> <br> <span class="nonmaj nonaltgrv">ç</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('à','0','@')"> <span class="maj nonaltgrv">0</span> <span class="altgrv">@</span> <br> <span class="nonmaj nonaltgrv">à</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar(')','°',']')"> <span class="maj nonaltgrv">°</span> <span class="altgrv">]</span> <br> <span class="nonmaj nonaltgrv">)</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('=','+','}')"> <span class="maj nonaltgrv">+</span> <span class="altgrv">}</span> <br> <span class="nonmaj nonaltgrv">=</span> </button>
+                </span>
+                <span id="back"><button onclick="back();"> <span></span> Back </button>
+                </span>
+
+            </div>
+            <div>
+                <span id="tab"><button onclick="insertCar('\t','\t')"> <span>tab</span> </button>
+                </span>
+                <span class="r1"><button  onclick="insertCar('a','A')" class="nonaltgr"> <span class="lettre  nonaltgrv">a</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('z','Z')" class="nonaltgr"> <span class="lettre  nonaltgrv">z</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('e','E','€')"> <span class="lettre  nonaltgrv">e</span> <span class="altgrv">€</span></button>
+                </span>
+                <span class="r1"><button onclick="insertCar('r','R')" class="nonaltgr"> <span class="lettre  nonaltgrv">r</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('t','T')" class="nonaltgr"> <span class="lettre  nonaltgrv">t</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('y','Y')" class="nonaltgr"> <span class="lettre  nonaltgrv">y</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('u','U')" class="nonaltgr"> <span class="lettre nonaltgrv">u</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('i','I')" class="nonaltgr"> <span class="lettre nonaltgrv">i</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('o','O')" class="nonaltgr"> <span class="lettre nonaltgrv">o</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('p','P')" class="nonaltgr"> <span class="lettre nonaltgrv">p</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('^','¨')" class="nonaltgr"><span class="maj nonaltgrv">¨</span> <br> <span class="nonmaj nonaltgrv">^</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('$','£','¤')"> <span  class="maj nonaltgrv">£</span> <span class="altgrv">¤</span> <br> <span class="nonmaj nonaltgrv">$</span> </button>
+                </span>
+                <span id="der"><button onclick="insertCar('*','µ')" class="nonaltgr"> <span  class="maj nonaltgrv">µ</span> <br> <span class="nonmaj nonaltgrv">*</span> </button>
+                </span>
+            </div>
+            <div>
+                <span id="cl"><button id="clin" onclick="maju()"> <span>Caps Lock</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('q','Q')" class="nonaltgr"> <span class="lettre  nonaltgrv">q</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('s','S')" class="nonaltgr"> <span class="lettre nonaltgrv">s</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('d','D')" class="nonaltgr"> <span class="lettre nonaltgrv">d</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('f','F')" class="nonaltgr"> <span class="lettre nonaltgrv">f</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('g','G')" class="nonaltgr"> <span class="lettre nonaltgrv">g</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('h','H')" class="nonaltgr"> <span class="lettre nonaltgrv"> h</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('j','J')" class="nonaltgr"> <span class="lettre nonaltgrv">j</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('k','K')" class="nonaltgr"> <span class="lettre nonaltgrv">k</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('l','L')" class="nonaltgr"> <span class="lettre nonaltgrv">l</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('m','M')" class="nonaltgr"> <span class="lettre nonaltgrv">m</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('%','ù')" class="nonaltgr"> <span  class="maj nonaltgrv">%</span> <br> <span class="nonmaj nonaltgrv">ù</span> </button>
+                </span>
+                <span id="entrer"><button onclick="insertCar('\n','\n')"> <span>Enter</span> </button>
+                </span>
+
+            </div>
+            <div>
+                <span id="shift1"><button class="sh" onclick="shift()"> <span>Shift</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('<','>')" class="nonaltgr"> <span class="maj nonaltgrv">&rsaquo;</span> <br> <span class="nonmaj nonaltgrv">&lsaquo;</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('w','W')" class="nonaltgr"> <span class="lettre nonaltgrv"> w</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('x','X')" class="nonaltgr"> <span class="lettre nonaltgrv">x</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('c','C')" class="nonaltgr"> <span class="lettre nonaltgrv">c</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('v','V')" class="nonaltgr"> <span class="lettre nonaltgrv">v</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('b','B')" class="nonaltgr"> <span class="lettre nonaltgrv">b</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('n','N')" class="nonaltgr"> <span class="lettre nonaltgrv">n</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar(',','?')" class="nonaltgr"> <span  class="maj nonaltgrv">?</span> <br> <span class="nonmaj nonaltgrv">,</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar(';','.')" class="nonaltgr"> <span  class="maj nonaltgrv">.</span> <br> <span class="nonmaj nonaltgrv">;</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar(':','/')" class="nonaltgr"> <span  class="maj nonaltgrv">/</span> <br> <span class="nonmaj nonaltgrv">:</span> </button>
+                </span>
+                <span class="r1"><button onclick="insertCar('!','§')" class="nonaltgr"> <span  class="maj nonaltgrv">§</span> <br> <span class="nonmaj nonaltgrv">!</span> </button>
+                </span>
+                <span id="shift2"><button class="sh" onclick="shift()"> <span>Shift</span> </button>
+                </span>
+
+            </div>
+            <div>
+                <span class="r1"><button> <span> Fn</span> </button>
+                </span>
+                <span class="r1"><button> <span>Ctr</span> </button>
+                </span>
+                <span class="r1"><button> <span>option</span> </button>
+                </span>
+                <span class="r1"><button> <span>Alt</span> </button>
+                </span>
+                <span id="space"><button onclick="insertCar(' ',' ')">  </button> </span>
+                <span class="rs"><button id="rs" onclick="altGr()"> <span>AltGr</span> </button>
+                </span>
+                <span class="rs"><button> <span>Ctr</span> </button>
+                </span>
+                <div style="display:inline-flex">
+                    <div><button onclick="haut()"> <span>Page <br> Up</span> </button></div>
+                    <div style="display:flex"><button onclick="haut()"> <span>^</span> </button></div>
+                    <div><button onclick="haut()"> <span>Page <br> Down</span> </button></div>
+                    <div style="display:flex"><button onclick="gauche()"> <span>&lt;</span> </button></div>
+                    <div style="display:flex"><button onclick="bas()"> <span>v</span> </button> </div>
+                    <div style="display:flex"><button onclick="droite()"> <span>&gt;</span> </button></div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper" id="wrapper" style="display: none;font-size: 16px;">
+        <div class="calendrier">
+            <div class="month">
+                <div class="prev" onclick="prev()">
+                    <span>&#10094</span>
+                </div>
+                <div>
+                    <h2 id="annee">2019</h2>
+                    <h2 id="month">Août</h2>
+                    <p id="chaine_date">lundi 19 Août 2019</p>
+                    <p id="heur"></p>
+                </div>
+                <div class="next" onclick="suivant()">
+                    <span>&#10095</span>
+                </div>
+            </div>
+            <div class="weekends">
+                <div>lun</div>
+                <div>mar</div>
+                <div>mer</div>
+                <div>jeu</div>
+                <div>ven</div>
+                <div>sam</div>
+                <div>dim</div>
+            </div>
+
+            <div class="days">
+
+            </div>
+
+        </div>
+
+    </div>
+    <script src="../script/script.js"></script>
+    <script src="../script/clavier.js"></script>
+    <script src="../script/calendrier.js"></script>
+</body>
+
+</html>
